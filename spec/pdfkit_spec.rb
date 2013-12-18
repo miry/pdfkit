@@ -185,6 +185,24 @@ describe PDFKit do
       command.should include "--orientation Landscape"
     end
 
+    it "should use quite option by defautl" do
+      pdfkit = PDFKit.new('html')
+      pdfkit.command.should include '--quiet'
+    end
+
+    it "should not use quite option in verbose mode" do
+      PDFKit.configure do |config|
+        config.verbose = true
+      end
+
+      pdfkit = PDFKit.new('html')
+      pdfkit.command.should_not include '--quiet'
+
+      PDFKit.configure do |config|
+        config.verbose = false
+      end
+    end
+
   end
 
   context "#to_pdf" do
