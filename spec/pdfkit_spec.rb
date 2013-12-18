@@ -263,9 +263,10 @@ describe PDFKit do
       pdfkit.source.to_s.should include("<style>#{File.read(css)}</style></head>")
     end
 
-    it "should throw an error if it is unable to connect" do
-      pdfkit = PDFKit.new("http://google.com/this-should-not-be-found/404.html")
-      lambda { pdfkit.to_pdf }.should raise_error /exitstatus=2/
+    it "should not throw an error if it is unable to connect" do
+      pdfkit = PDFKit.new("http://localhost/this-should-not-be-found/404.html")
+      pdf = pdfkit.to_pdf
+      pdf[0...4].should == "%PDF" # PDF Signature at the beginning
     end
 
     it "should generate PDF if there are missing assets" do
