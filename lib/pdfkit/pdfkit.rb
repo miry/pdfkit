@@ -62,6 +62,8 @@ class PDFKit
 
     invoke = command(path)
 
+    puts invoke if PDFKit.configuration.verbose?
+
     result = IO.popen(invoke, "wb+") do |pdf|
       pdf.puts(@source.to_s) if @source.html?
       pdf.close_write
