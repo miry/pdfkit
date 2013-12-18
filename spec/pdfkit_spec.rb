@@ -269,7 +269,7 @@ describe PDFKit do
       lambda { pdfkit.to_pdf }.should raise_error /exitstatus=2/
     end
 
-    it "should not throw an error if it is unable to connect", :pending => 'this test works for wkhtmltopdf-binary (0.9.9.1)' do
+    it "should not throw an error if it is unable to connect", pending: 'this test works for wkhtmltopdf-binary (0.9.9.1)' do
       pdfkit = PDFKit.new("http://localhost/this-should-not-be-found/404.html")
       pdf = pdfkit.to_pdf
       pdf[0...4].should == "%PDF" # PDF Signature at the beginning
