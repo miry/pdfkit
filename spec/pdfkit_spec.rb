@@ -81,6 +81,13 @@ describe PDFKit do
       command.should include "--cookie cookie_name2 cookie_val2"
     end
 
+    it "should setup multiple cookies" do
+      pdfkit = PDFKit.new('html', [:cookie, :cookie_name1] => :cookie_val1, [:cookie, :cookie_name2] => :cookie_val2)
+      command = pdfkit.command
+      command.should include "--cookie cookie_name1 cookie_val1"
+      command.should include "--cookie cookie_name2 cookie_val2"
+    end
+
     it "will not include default options it is told to omit" do
       PDFKit.configure do |config|
         config.default_options[:disable_smart_shrinking] = true
