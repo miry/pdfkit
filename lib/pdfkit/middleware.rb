@@ -19,7 +19,15 @@ class PDFKit
       if rendering_pdf? && headers['Content-Type'] =~ /text\/html|application\/xhtml\+xml/
         body = response.respond_to?(:body) ? response.body : response.join
         body = body.join if body.is_a?(Array)
-        body = PDFKit.new(translate_paths(body, env), @options).to_pdf
+        translated_content = translate_paths(body, env)
+        if PDFKit.configuration.verbose?
+          puts 'PDFKIT: Converting content:'
+          puts '====== BEGIN ======'
+          puts translated_content
+          puts '======= END ======='
+        end
+        body = PDFKit.new(translated_content, @options).to_pdf
+
         response = [body]
 
         if headers['PDFKit-save-pdf']
