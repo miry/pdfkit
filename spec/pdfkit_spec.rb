@@ -153,6 +153,20 @@ describe PDFKit do
       command.should include "--cookie rails_session rails_session_value --cookie cookie_variable cookie_variable_value"
     end
 
+    it "should detect disable_smart_shrinking meta tag" do
+      body = %{
+        <html>
+          <head>
+            <meta name="pdfkit-disable_smart_shrinking" content="true"/>
+          </head>
+        </html>
+      }
+      pdfkit = PDFKit.new(body)
+      command = pdfkit.command
+      command.should_not include "--disable-smart-shrinking true"
+      command.should include "--disable-smart-shrinking"
+    end
+
     it "should detect special pdfkit meta tags despite bad markup" do
       body = %{
         <html>
