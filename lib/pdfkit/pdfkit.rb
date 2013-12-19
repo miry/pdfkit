@@ -64,10 +64,10 @@ class PDFKit
 
     puts invoke if PDFKit.configuration.verbose?
 
-    result = IO.popen(invoke, "wb+", err: [:child, :out]) do |pdf|
+    result = IO.popen(invoke, "wb+") do |pdf|
       pdf.puts(@source.to_s) if @source.html?
       pdf.close_write
-      p pdf.gets(nil)
+      pdf.gets(nil)
     end
     result = File.read(path) if path
 
