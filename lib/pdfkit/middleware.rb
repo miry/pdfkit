@@ -110,7 +110,7 @@ class PDFKit
 
     def not_applied_to_conditions_except?
       rules = [@conditions[:except]].flatten
-      rules.map do |pattern|
+      rules.each do |pattern|
         if pattern.is_a?(Regexp)
           return false if @request.path =~ pattern
         else
